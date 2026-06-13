@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Tai Chi Iga Päev</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;400;700&family=Noto+Sans+JP:wght@300;400&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans JP','Segoe UI',system-ui,sans-serif;background:#F5F0E8;color:#3A3630;min-height:100vh;padding-bottom:90px;
+  background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30Z' fill='none' stroke='%23E0D8C8' stroke-width='.3'/%3E%3C/svg%3E");
+}
+.app{max-width:600px;margin:0 auto;padding:16px}
+
+/* Wabi-sabi header */
+.header{text-align:center;padding:30px 0 20px;position:relative}
+.header::after{content:'';display:block;width:60px;height:1px;background:#B8A88A;margin:16px auto 0}
+.header h1{font-family:'Noto Serif JP',serif;font-size:24px;color:#5C4D3C;font-weight:200;letter-spacing:4px}
+.header .date{font-size:13px;color:#9C8E7C;margin-top:6px;letter-spacing:1px}
+.streak{display:inline-block;background:transparent;border:1px solid #B8A88A;color:#7C6D5C;padding:5px 18px;border-radius:0;font-size:12px;margin-top:12px;letter-spacing:1px}
+
+/* Ink wash quote */
+.quote-box{background:linear-gradient(135deg,#4A4035,#3A3530);border-radius:2px;padding:28px 24px;margin-bottom:16px;color:#E8E0D4;position:relative;overflow:hidden}
+.quote-box::before{content:'氣';position:absolute;right:16px;top:8px;font-size:80px;opacity:.06;font-family:'Noto Serif JP',serif;color:#fff}
+.quote-box .qt{font-family:'Noto Serif JP',serif;font-size:15px;font-style:italic;line-height:1.7;color:#E8E0D4;font-weight:200}
+.quote-box .qa{font-size:11px;color:#A89880;margin-top:10px;letter-spacing:1px}
+
+/* Cards - paper texture feel */
+.card{background:#FFFDF8;border-radius:2px;padding:22px;margin-bottom:16px;box-shadow:0 1px 4px rgba(90,70,50,.08);border:1px solid #EDE6D8;position:relative}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,#C4A87C,transparent)}
+.card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid #EDE6D8}
+.card-head h2{font-family:'Noto Serif JP',serif;font-size:16px;color:#5C4D3C;font-weight:400;letter-spacing:1px}
+.badge{background:transparent;border:1px solid #C4A87C;color:#8C7A62;padding:2px 10px;border-radius:0;font-size:10px;letter-spacing:1px}
+.badge-new{border-color:#C67B5C;color:#C67B5C}
+
+/* Exercise items */
+.ex{padding:16px 0;border-bottom:1px solid #EDE6D8}
+.ex:last-child{border-bottom:none}
+.ex-top{display:flex;align-items:flex-start;gap:14px}
+.ex-chk{width:24px;height:24px;border:1.5px solid #C4A87C;border-radius:0;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-top:2px;transition:.3s;background:transparent}
+.ex-chk.done{background:#8BAA7C;border-color:#8BAA7C;color:#fff}
+.ex-info{flex:1}
+.ex-name{font-family:'Noto Serif JP',serif;font-size:14px;font-weight:400;color:#4A4035;letter-spacing:.5px}
+.ex-meta{font-size:11px;color:#A0937F;margin:4px 0 8px;letter-spacing:.5px}
+.ex-desc{font-size:13px;color:#6B6056;line-height:1.6}
+
+/* Ink wash illustration area */
+.ex-illust{background:linear-gradient(180deg,#F5F0E8,#EDE6D8);border-radius:2px;padding:20px;margin-top:12px;text-align:center;min-height:100px;display:flex;align-items:center;justify-content:center;position:relative;border:1px solid #E0D8C8}
+.ex-illust::after{content:'';position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:40px;height:1px;background:#C4A87C}
+
+/* Tip - bamboo feel */
+.tip-box{background:linear-gradient(135deg,#EDE9DC,#E4DDD0);border-radius:2px;padding:22px;margin-bottom:16px;border-left:3px solid #8BAA7C;position:relative}
+.tip-box h3{font-family:'Noto Serif JP',serif;font-size:14px;color:#5C4D3C;margin:6px 0;font-weight:400;letter-spacing:.5px}
+.tip-box p{font-size:13px;color:#6B6056;line-height:1.6}
+
+/* Timer */
+.timer-box{text-align:center;padding:24px 0}
+.timer-num{font-family:'Noto Serif JP',serif;font-size:52px;font-weight:200;color:#5C4D3C;letter-spacing:4px}
+.timer-lbl{font-size:12px;color:#9C8E7C;margin-bottom:16px;letter-spacing:1px}
+.tbtn{padding:12px 28px;border:none;font-size:14px;cursor:pointer;margin:4px;letter-spacing:1px;font-family:'Noto Sans JP',sans-serif}
+.tbtn-go{background:#5C4D3C;color:#F5F0E8;border-radius:0}
+.tbtn-stop{background:transparent;color:#5C4D3C;border:1px solid #C4A87C;border-radius:0}
+
+/* Learn */
+.learn-item{background:#FFFDF8;border-radius:2px;overflow:hidden;margin-bottom:16px;border:1px solid #EDE6D8}
+.learn-top{background:linear-gradient(135deg,#EDE6D8,#E0D8C8);padding:28px;text-align:center;font-size:44px;position:relative}
+.learn-top::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#C4A87C,transparent)}
+.learn-body{padding:20px}
+.learn-body h3{font-family:'Noto Serif JP',serif;font-size:15px;margin-bottom:8px;color:#4A4035;font-weight:400;letter-spacing:.5px}
+.learn-body p{font-size:13px;color:#6B6056;line-height:1.6}
+.ltag{display:inline-block;background:transparent;border:1px solid #C4A87C;color:#8C7A62;padding:2px 8px;border-radius:0;font-size:10px;margin-top:8px;letter-spacing:1px}
+
+/* Progress */
+.prog-ring{width:140px;height:140px;margin:0 auto 16px;position:relative}
+.prog-ring svg{transform:rotate(-90deg)}
+.prog-ring .pv{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Noto Serif JP',serif;font-size:26px;font-weight:200;color:#5C4D3C}
+.wgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:16px}
+.wd{text-align:center}
+.wd .dot{width:32px;height:32px;border-radius:0;margin:0 auto 3px;display:flex;align-items:center;justify-content:center;font-size:11px;font-family:'Noto Sans JP',sans-serif}
+.wd .dot.done{background:#8BAA7C;color:#fff}
+.wd .dot.today{background:#5C4D3C;color:#F5F0E8}
+.wd .dot.future{background:#EDE6D8;color:#9C8E7C}
+.wd label{font-size:10px;color:#9C8E7C}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;text-align:center}
+.stats .sn{font-family:'Noto Serif JP',serif;font-size:26px;color:#5C4D3C;font-weight:200}
+.stats .sl{font-size:11px;color:#9C8E7C;letter-spacing:.5px}
+.sec{display:none}.sec.on{display:block}
+
+/* Navigation - minimal ink */
+.nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#FFFDF8;box-shadow:0 -1px 4px rgba(90,70,50,.06);z-index:99;border-top:1px solid #EDE6D8}
+.nav button{flex:1;padding:12px 4px;border:none;background:none;font-size:10px;color:#A0937F;cursor:pointer;letter-spacing:.5px;font-family:'Noto Sans JP',sans-serif}
+.nav button.on{color:#5C4D3C;font-weight:400}
+.nav button svg{display:block;margin:0 auto 3px;width:20px;height:20px}
+
+.preset{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #EDE6D8;cursor:pointer;font-size:13px;color:#5C4D3C}
+.preset:last-child{border-bottom:none}
+.preset span:last-child{color:#A0937F}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<div class="nav">
+  <button class="on" id="n0" onclick="go(0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Täna</button>
+  <button id="n1" onclick="go(1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M5 3l2 2M19 3l-2 2M12 5V3"/></svg>Taimer</button>
+  <button id="n2" onclick="go(2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>Õpime</button>
+  <button id="n3" onclick="go(3)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>Progress</button>
+</div>
+<script>
+var S=JSON.parse(localStorage.getItem('tc')||'null')||{sd:new Date().toISOString().slice(0,10),cd:{},tc:[],st:0,te:0,tm:0,ld:''};
+function sv(){localStorage.setItem('tc',JSON.stringify(S))}
+var dn=function(){var s=new Date(S.sd),t=new Date();s.setHours(0,0,0,0);t.setHours(0,0,0,0);return Math.max(1,Math.floor((t-s)/864e5)+1)}
+var wk=function(){return Math.min(Math.ceil(dn()/7),4)}
+var tk=function(){return new Date().toISOString().slice(0,10)}
+
+var Q=[
+["Tuhat miili pikkune teekond algab ühe sammuga.","Laozi"],
+["Pehme ja nõtke võidab kõva ja jäiga.","Laozi"],
+["Vesi on kõige pehmem, aga murrab kõige kõvema.","Laozi"],
+["Lihtsuses on suurim jõud.","Tai chi tarkus"],
+["Ära kiirusta. Kevad tuleb ja rohi kasvab iseenesest.","Laozi"],
+["Rahuliku meelega inimene näeb kõike selgelt.","Tai chi tarkus"],
+["Hinga sisse julgust, hinga välja hirmu.","Hiina vanasõna"],
+["Keha liigub, meel on vaikne.","Tai chi põhimõte"],
+["Chi järgib meelt. Kuhu meel läheb, sinna voolab chi.","Tai chi tarkus"],
+["Iga päev on uus võimalus harjutada.","Tai chi tarkus"],
+["Olemine on olulisem kui tegemine.","Laozi"],
+["Tarkus on teada, et sa ei tea.","Laozi"]
+];
+
+var TP=[
+["Hingamine on alus","Tai chi's on hingamine kõige olulisem. Ära muretse liigutuste pärast — kui hingamine on õige, tulevad liigutused iseenesest."],
+["Ära pinguta","Liigutused peavad olema pingevabad. Kui tunned pinget õlgades — lase neil vajuda."],
+["Aeglasemalt!","Kui arvad et liigud piisavalt aeglaselt — liiguta veel aeglasemalt. Tai chi võlu on aegluses."],
+["Põlved on olulised","Hoia põlved kergelt kõverdatud, mitte lukus. Põlved ei tohi ulatuda üle varvaste."],
+["Keha on üks tervik","Kogu keha liigub koos — puusad, selg, õlad, käed on ühendatud."],
+["Juured maa sees","Kujutle et jalad on juurdunud maasse. Ülemine keha on kerge, alumine raske."],
+["Silmad järgivad käsi","Pilk järgib alati käte liikumist. See ühendab meele ja keha."],
+["Harjuta iga päev","10 minutit iga päev on parem kui tund korra nädalas."]
+];
+
+var EX={
+1:[
+["Soojendus: randme- ja õlaringid",3,"Tee aeglased ringid randmetega (10x mõlemas suunas), seejärel õlgadega. Hingamine rahulik.","soojendus","🔄"],
+["Wuji seisak",5,"Seisa jalad õlgade laiuselt, põlved kergelt kõverdatud. Käed ripuvad vabalt. Keskendu hingamisele — sisse ninast, välja suust.","alus","🧍"],
+["Kõhuhingamine",5,"Käed kõhul. Sisse hingates lase kõhul paisuda, välja hingates tõmba sisse. 4 sek sisse, 4 sek välja.","hingamine","🌬️"],
+["Käte tõstmine ja langetamine",5,"Tõsta käed aeglaselt ette üles (sisse hingates), langeta alla (välja hingates). 10 kordust. Sujuv nagu vesi.","vorm","🙌"],
+["Kaaluülekanne",5,"Seisa laiemalt. Kanna raskust aeglaselt paremale, siis vasakule jalale. Käed liiguvad kaasa.","alus","⚖️"],
+["Lõdvestus ja venitused",3,"Raputa käsi-jalgu. Kalluta pead vasakule, paremale. 3 sügavat hingetõmmet.","lõpetus","🍃"]
+],
+2:[
+["Soojendus: keharingid",3,"Lisa randmeringidele puusa- ja põlveringid. Sujuv ja kontrollitud.","soojendus","🔄"],
+["Wuji seisak (süvendatud)",7,"Kujutle et jalataldadest kasvavad juured maasse. Tunne stabiilsust. 7 minutit.","alus","🌳"],
+["Pilvede lükkamine",5,"Lükka käed aeglaselt ette nagu lükkaksid pilvi. Tõmba tagasi. Käed pehmed, küünarnukid ei sirutu välja.","vorm","☁️"],
+["Kaalukandmine sammuga",5,"Astu aeglaselt: tõsta jalg, aseta kand, rulli tald maha. Kanna raskus ette. 5x mõlema jalaga.","alus","👣"],
+["Palli hoidmine",5,"Käed rinna ees nagu hoiaksid palli. Ava laialt (sisse), sulge (välja). Pall hingab koos sinuga.","vorm","⭕"],
+["Seisev meditatsioon",5,"Wuji asend, silmad kinni. Keskendu hingamisele. 5 minutit vaikust.","lõpetus","🧘"]
+],
+3:[
+["Keha äratamine",4,"Patsuta kergelt kogu keha üle — käsivarred, jalad, kõht, selg. Äratab chi voolama.","soojendus","✋"],
+["Puu embamine",7,"Wuji seisakus tõsta käed rinna ette nagu embaksid suurt puud. Hoia 7 min. Kui käed väsivad — lase madalamale.","alus","🌲"],
+["Hobuse seisak (Ma Bu)",3,"Jalad 2x õlgade laius. Põlved kõveras nagu istuksid hobusel. Selg sirge. Hoia nii kaua kui jaksad.","alus","🐴"],
+["Valge kurg sirutab tiibu",5,"Paremale astudes tõsta parem käsi üles, vasak alla — nagu kurg avab tiibu. Vaheta poolt. Graatsiline ja aeglane.","vorm","🦢"],
+["Harjamine põlvest",5,"Astu ette, hari käega üle põlve ja lükka teine käsi ette. 5x mõlemas suunas.","vorm","🌊"],
+["Lõpuringid",4,"Aeglased ringid kätega kõhu ees. 9 ringi päripäeva, 9 vastupäeva. Lõpeta 3 sügava hingetõmbega.","lõpetus","🔁"]
+],
+4:[
+["Chi äratamine",4,"Hõõru peopesad soojaks. Aseta silmadele, kõrvadele, neerudele. Tunne soojust. Raputa keha vabaks.","soojendus","🔥"],
+["Dantiani meditatsioon",8,"Wuji, käed kõhul (3 sõrme laiust nabast all). See on su energiakeskus. Hinga siia. Tunne soojust kasvamas.","alus","🔴"],
+["Kaelkirjaku rull",5,"Kujutle et pea on kaelkirjaku peas. Äärmiselt aeglased ringid kaelaga.","vorm","🦒"],
+["Üksiku piitsa liigutus",5,"Pööra vasakule, parem käsi sirutub ette nagu piits. Vasak kaitseb rinda. Vaheta poolt. Pikema vormi liigutus.","vorm","🥋"],
+["Kuldkala keerab saba",5,"Keha pööre ühelt poolt teisele, käed liiguvad kaasa nagu kala saba. Sujuv ja pidev.","vorm","🐟"],
+["Energia kogumine",5,"Tõsta käed üles (sisse), kogu energiat. Langeta dantiani (välja). 5 korda. Seisa vaikselt.","lõpetus","✨"]
+]};
+
+var LT=[
+["Mis on tai chi?","Tai chi (太极拳) on iidne Hiina liikumiskunst — aeglased liigutused, sügav hingamine ja meditatsioon. Algselt võitluskunst, tänapäeval terviseks ja vaimse rahu leidmiseks. Sobib igale vanusele.","Alused","☯️"],
+["Chi — eluenergia","Chi (气) on eluenergia mis voolab läbi keha. Tai chi eesmärk on chi vaba voolamine. Blokeeritud chi tekitab tervisemuresid. Liigutused ja hingamine aitavad chi'd voolama.","Filosoofia","🌊"],
+["Yin ja Yang","Vastandid täiendavad teineteist. Pehme ja kõva, aeglane ja kiire. Harjutades otsime tasakaalu.","Filosoofia","⚪"],
+["Dantian — energiakeskus","3 sõrmelaiust nabast allpool, kõhu sees. Su energiakeskus. Hingamine suunatud siia. Kõik liigutused algavad siit.","Keha","🔴"],
+["5 tai chi stiili","Chen — jõulisem. Yang — sujuv, kõige levinum (meie stiil). Wu — kompaktne. Sun — vilgas. Hao — sisemisele energiale keskendunud.","Ajalugu","📜"],
+["Tervisekasu","Teaduslikult tõestatud: parandab tasakaalu, vähendab stressi, alandab vererõhku, tugevdab liigeseid, parandab und. WHO soovitab.","Tervis","💚"],
+["Wuji — tühjuse seisak","Algasend — seisad lõdvestunult, põlved kõverdatud, käed all. Nagu tühi lõuend — kõik algab ja lõpeb siia.","Praktika","🧘"],
+["Kuidas hingata","Sisse ninast, välja suust. Kõhuhingamine — kõht paisub. Hingamine juhib liikumist. Ära hoia hinge kinni.","Praktika","🌬️"]
+];
+
+var page=0,tmr=null,tsec=0,trun=false,ttgt=0;
+
+function go(p){page=p;for(var i=0;i<4;i++){document.getElementById('n'+i).className=i===p?'on':''}render()}
+
+function render(){
+var a=document.getElementById('app'),h='',d=dn(),w=wk(),today=tk();
+if(S.ld!==today){S.tc=[];S.ld=today;sv()}
+var qi=d%Q.length,ti=d%TP.length;
+var exs=EX[w]||EX[1];
+var opts={weekday:'long',year:'numeric',month:'long',day:'numeric'};
+var dateStr=new Date().toLocaleDateString('et-EE',opts);
+
+if(page===0){
+h+='<div class="header"><h1>🌿 Tai Chi Iga Päev</h1><div class="date">'+dateStr+'</div><div class="streak">🔥 '+Math.max(S.st,1)+'. päev</div></div>';
+h+='<div class="quote-box"><div class="qt">"'+Q[qi][0]+'"</div><div class="qa">— '+Q[qi][1]+'</div></div>';
+h+='<div class="card"><div class="card-head"><h2>🌅 Tänane kava</h2><span class="badge">'+w+'. nädal</span></div>';
+for(var i=0;i<exs.length;i++){
+  var e=exs[i],done=S.tc.indexOf(i)>=0;
+  h+='<div class="ex"><div class="ex-top"><div class="ex-chk'+(done?' done':'')+'" onclick="tog('+i+')">'+(done?'✓':'')+'</div><div class="ex-info"><div class="ex-name">'+e[0]+'</div><div class="ex-meta">⏱ '+e[1]+' min · '+e[3]+'</div><div class="ex-desc">'+e[2]+'</div><div class="ex-illust"><span style="font-size:48px">'+e[4]+'</span></div></div></div></div>';
+}
+h+='</div>';
+if(d%3===0||d===1){var si=Math.floor(d/3)%LT.length,sk=LT[si];
+h+='<div class="card"><div class="card-head"><h2>✨ Uus oskus</h2><span class="badge badge-new">UUS</span></div><div style="font-size:36px;margin-bottom:8px">'+sk[3]+'</div><h3 style="margin-bottom:6px">'+sk[0]+'</h3><p style="font-size:13px;line-height:1.5;color:#555">'+sk[1]+'</p><span class="ltag">'+sk[2]+'</span></div>';
+}
+h+='<div class="tip-box"><div style="font-size:28px">💡</div><h3>'+TP[ti][0]+'</h3><p>'+TP[ti][1]+'</p></div>';
+}
+
+else if(page===1){
+h+='<div class="header"><h1>⏱ Taimer</h1><div class="date">Harjutuse taimer</div></div>';
+h+='<div class="card"><div class="timer-box"><div class="timer-lbl" id="tlbl">Vali harjutus alt</div><div class="timer-num" id="tdisp">00:00</div><div style="margin-top:16px"><button class="tbtn tbtn-go" onclick="ttog()">▶ Alusta</button><button class="tbtn tbtn-stop" onclick="trst()">↺ Algusesse</button></div></div></div>';
+h+='<div class="card"><h2 style="font-size:16px;color:#2D6A4F;margin-bottom:12px">Tänased harjutused</h2>';
+for(var i=0;i<exs.length;i++){h+='<div class="preset" onclick="tset(\''+exs[i][0].replace(/'/g,"\\'")+'\','+exs[i][1]+')"><span>'+exs[i][0]+'</span><span>'+exs[i][1]+' min</span></div>';}
+h+='</div>';
+}
+
+else if(page===2){
+h+='<div class="header"><h1>📖 Õpime</h1><div class="date">Tai chi alused ja filosoofia</div></div>';
+for(var i=0;i<LT.length;i++){var l=LT[i];
+h+='<div class="learn-item"><div class="learn-top">'+l[3]+'</div><div class="learn-body"><h3>'+l[0]+'</h3><p>'+l[1]+'</p><span class="ltag">'+l[2]+'</span></div></div>';
+}
+}
+
+else if(page===3){
+var done=S.tc?S.tc.length:0,total=exs.length,pct=Math.round(done/total*100);
+var off=440-440*pct/100;
+h+='<div class="header"><h1>📊 Edasiminek</h1><div class="date">Sinu teekond</div></div>';
+h+='<div class="card"><h2 style="text-align:center;font-size:16px;color:#2D6A4F;margin-bottom:16px">Tänane progress</h2><div class="prog-ring"><svg width="140" height="140"><circle cx="70" cy="70" r="62" fill="none" stroke="#E8E5DF" stroke-width="7"/><circle cx="70" cy="70" r="62" fill="none" stroke="#52B788" stroke-width="7" stroke-dasharray="390" stroke-dashoffset="'+off+'" stroke-linecap="round"/></svg><div class="pv">'+pct+'%</div></div></div>';
+h+='<div class="card"><h2 style="font-size:16px;color:#2D6A4F;margin-bottom:12px">See nädal</h2><div class="wgrid">';
+var dn2=['E','T','K','N','R','L','P'],now=new Date(),ws=new Date(now);ws.setDate(now.getDate()-now.getDay()+1);
+for(var i=0;i<7;i++){var dd=new Date(ws);dd.setDate(ws.getDate()+i);var k=dd.toISOString().slice(0,10),isT=k===today,isD=S.cd[k],isF=dd>now;
+var cls=isF?'future':isD?'done':isT?'today':'future';
+h+='<div class="wd"><div class="dot '+cls+'">'+dd.getDate()+'</div><label>'+dn2[i]+'</label></div>';}
+h+='</div></div>';
+h+='<div class="card"><h2 style="font-size:16px;color:#2D6A4F;margin-bottom:14px">Statistika</h2><div class="stats"><div><div class="sn">'+S.te+'</div><div class="sl">Harjutusi tehtud</div></div><div><div class="sn">'+S.tm+'</div><div class="sl">Minutit kokku</div></div><div><div class="sn">'+S.st+'</div><div class="sl">Päeva järjest</div></div><div><div class="sn">'+Math.floor(d/3)+'</div><div class="sl">Oskusi õpitud</div></div></div></div>';
+}
+a.innerHTML=h;
+}
+
+function tog(i){
+var idx=S.tc.indexOf(i),exs=EX[wk()]||EX[1];
+if(idx>=0){S.tc.splice(idx,1);S.te=Math.max(0,S.te-1);S.tm=Math.max(0,S.tm-exs[i][1])}
+else{S.tc.push(i);S.te++;S.tm+=exs[i][1]}
+if(S.tc.length===(EX[wk()]||EX[1]).length){S.cd[tk()]=1;ustk()}
+sv();render();
+}
+
+function ustk(){var s=0,d=new Date();while(true){var k=d.toISOString().slice(0,10);if(S.cd[k]){s++;d.setDate(d.getDate()-1)}else break}S.st=s;sv()}
+
+function tset(n,m){document.getElementById('tlbl').textContent=n;ttgt=m*60;tsec=0;utd()}
+function ttog(){
+if(trun){clearInterval(tmr);trun=false;document.querySelector('.tbtn-go').textContent='▶ Jätka'}
+else{trun=true;document.querySelector('.tbtn-go').textContent='⏸ Paus';
+tmr=setInterval(function(){tsec++;utd();if(ttgt>0&&tsec>=ttgt){clearInterval(tmr);trun=false;document.querySelector('.tbtn-go').textContent='✓ Valmis!';try{navigator.vibrate(500)}catch(e){}}},1000)}
+}
+function trst(){clearInterval(tmr);trun=false;tsec=0;utd();document.querySelector('.tbtn-go').textContent='▶ Alusta'}
+function utd(){var m=String(Math.floor(tsec/60)).padStart(2,'0'),s=String(tsec%60).padStart(2,'0');var el=document.getElementById('tdisp');if(el)el.textContent=m+':'+s}
+
+render();
+</script>
+</body>
+</html>

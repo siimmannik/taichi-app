@@ -6,6 +6,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#3A3530">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
 <title>Tai Chi Iga Päev</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;400;600&family=Noto+Sans:wght@300;400;500;600&display=swap');
@@ -301,6 +303,18 @@ img{max-width:100%;display:block}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 .fade{animation:fadeIn .35s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ===== engagement additions ===== */
+.sonnote{font-family:'Noto Serif JP',serif;font-size:1.05rem;color:var(--ink2);text-align:center;padding:.1rem .6rem 1rem;line-height:1.55;font-style:italic}
+.start-short{width:100%;border:1px solid var(--line);background:var(--paper);color:var(--ink2);border-radius:1rem;padding:.85rem;margin:-.4rem 0 1rem;font-family:inherit;font-size:.95rem;cursor:pointer}
+.start-short:active{background:var(--paper2)}
+.s-finish .mile h2{color:var(--gold)}
+.moodq{font-size:.95rem;color:var(--soft);margin-top:.5rem}
+.moods{display:flex;gap:.5rem;margin:.3rem 0 .2rem;flex-wrap:wrap;justify-content:center}
+.moods button{border:1px solid var(--line);background:var(--paper2);color:var(--ink2);border-radius:.8rem;padding:.6rem 1rem;font-family:inherit;font-size:.95rem;cursor:pointer}
+.moods button.sel{background:var(--good);color:#fff;border-color:var(--good)}
+.tomorrow{font-size:.92rem;color:var(--soft);margin-top:.4rem}
+.fbtn-ghost{background:transparent;border:1px solid var(--line);color:var(--ink2);border-radius:.9rem;padding:.7rem 1.4rem;font-family:inherit;font-size:.95rem;cursor:pointer;margin-top:.1rem}
 </style>
 </head>
 <body>
@@ -412,6 +426,47 @@ var WEEKS={
 ]}
 };
 
+WEEKS[5]={title:"Süvenemine",ex:[
+ {n:"Soojendus: õlad, randmed, kael",m:3,t:"Soojendus",a:"warmup",img:"warmup",st:["Tee aeglased ringid õlgade, randmete ja kaelaga.","Iga liigutus pehme ja rahulik.","Hingamine ühtlane."]},
+ {n:"Wuji — sügav juurdumine",m:5,t:"Alus",a:"wuji",img:"wuji",st:["Seisa, põlved pehmed, käed all.","Tunne, kuidas raskus vajub jalataldadesse.","Ülakeha kerge, alakeha kindel.","Hinga rahulikult kõhtu."]},
+ {n:"Pilvede käed mõlemale poole",m:5,t:"Vorm",a:"cloud",img:"cloud",st:["Käed liiguvad pehmelt keha ees.","Pööra õrnalt vasakule, siis paremale.","Pilk järgib käsi.","Katkematu nagu vool."]},
+ {n:"Pikk kõhuhingamine",m:5,t:"Hingamine",a:"breathe",br:true,img:"breathe",st:["Käed kõhul, silmad võivad sulguda.","Sisse 4, välja 6 sekundit.","Iga väljahingamisega lõdvestu rohkem."]},
+ {n:"Palli hoidmine ja kandmine",m:5,t:"Vorm",a:"ball",img:"ball",st:["Hoia palli rinna ees.","Kanna seda õrnalt ühele, siis teisele poole.","Käed pehmed, õlad madalal."]},
+ {n:"Lõpetus: venitus ja raputus",m:3,t:"Lõpetus",a:"stretch",img:"stretch",st:["Raputa käed-jalad lõdvaks.","Kalluta pead õrnalt külgedele.","Kolm sügavat hingetõmmet."]}
+]};
+WEEKS[6]={title:"Vool",ex:[
+ {n:"Soojendus: kael ja õlad",m:3,t:"Soojendus",a:"neck",img:"neck",st:["Langeta lõug rinnale, tõsta tagasi.","Pööra pead aeglaselt külgedele.","Väikesed õlaringid."]},
+ {n:"Käte soojendamine",m:3,t:"Soojendus",a:"warmpalms",img:"warmpalms",st:["Hõõru peopesad soojaks.","Silita käsivarsi ja kaela.","Tunne meeldivat soojust."]},
+ {n:"Pilvede käed sujuva vooluna",m:6,t:"Vorm",a:"cloud",img:"cloud",st:["Käed liiguvad pidevalt, peatumata.","Keha pöördub kaasa.","Hingamine ühtlane."]},
+ {n:"Kaalu ülekanne käte vooluga",m:5,t:"Tasakaal",a:"shift",su:true,img:"shift",st:["Vajadusel hoia toolist.","Kanna raskus ühele jalale, käed liiguvad kaasa.","Siis sujuvalt teisele."]},
+ {n:"Hingamine liikumisega",m:5,t:"Hingamine",a:"breathe",br:true,img:"breathe",st:["Tõsta käed sisse hingates, langeta välja hingates.","Lase hingamisel liikumist juhtida.","Aeglane ja pehme."]},
+ {n:"Lõpuringid dantiani ümber",m:4,t:"Lõpetus",a:"close",img:"close",st:["Käed ringi kõhu ees.","9 ringi ühele, 9 teisele poole.","Lõpeta käed kõhul."]}
+]};
+WEEKS[7]={title:"Juured ja taevas",ex:[
+ {n:"Keha äratamine",m:3,t:"Soojendus",a:"pat",img:"pat",st:["Patsuta õrnalt käsivarsi ja jalgu.","Liigu ülevalt alla.","Äratab vereringe."]},
+ {n:"Wuji — raske all, kerge üleval",m:5,t:"Alus",a:"wuji",img:"wuji",st:["Seisa kindlalt, põlved pehmed.","Alakeha raske ja juurdunud.","Ülakeha kerge nagu suits.","Hinga rahulikult."]},
+ {n:"Õrn põlvetõste tooliga",m:4,t:"Tasakaal",a:"knee",su:true,img:"knee",st:["Hoia toolist kinni.","Tõsta üks põlv mugava kõrguseni.","Lase alla, vaheta jalga."]},
+ {n:"Käed tõusevad nagu taevasse",m:5,t:"Vorm",a:"raise",br:true,img:"raise",st:["Sisse hingates tõsta käed külgedele üles.","Välja hingates lase pehmelt alla.","Sujuv nagu vesi."]},
+ {n:"Energia kogumine üleval ja all",m:5,t:"Vorm",a:"gather",img:"gather",st:["Tõsta käed külgedelt üles.","Too alla kõhuni.","Korda rahulikult."]},
+ {n:"Seisev meditatsioon",m:5,t:"Lõpetus",a:"meditate",img:"meditate",st:["Seisa wuji asendis, silmad kinni.","Keskendu hingamisele.","Naudi vaikust."]}
+]};
+WEEKS[8]={title:"Tervik",ex:[
+ {n:"Soojendus: kogu keha ärkab",m:3,t:"Soojendus",a:"warmup",img:"warmup",st:["Ringid õlgade, randmete, puusadega.","Pehme ja kontrollitud.","Hingamine kaasas."]},
+ {n:"Pilvede käed pööretega",m:5,t:"Vorm",a:"cloud",img:"cloud",st:["Käed liiguvad, puusad pöörduvad.","Kogu keha töötab koos.","Pidev vool."]},
+ {n:"Palli hoidmine ja keeramine",m:5,t:"Vorm",a:"ball",img:"ball",st:["Hoia palli, pööra keha õrnalt.","Pall liigub kehaga kaasa.","Puusad ja õlad koos."]},
+ {n:"Kaalu ülekanne tervikuna",m:5,t:"Tasakaal",a:"shift",su:true,img:"shift",st:["Vajadusel tooli lähedal.","Raskus voolab ühelt jalalt teisele.","Keha on üks tervik."]},
+ {n:"Dantiani hingamine",m:6,t:"Hingamine",a:"breathe",br:true,img:"breathe",st:["Käed kõhul, kolm sõrme nabast all.","Hinga sellesse kohta.","Tunne soojust kasvamas."]},
+ {n:"Energia kogumine ja vaikne lõpp",m:5,t:"Lõpetus",a:"gather",img:"gather",st:["Kogu energiat üles ja alla dantiani.","Korda 5 korda.","Seisa hetk vaikselt. Tubli."]}
+]};
+var GREET=["Üks rahulik hetk iseendale — sa väärid seda.","Tore, et siia tulid. Võtame täna aega, ilma kiiruseta.","Ei mingit kiiret. Keha tänab sind iga liigutuse eest.","Hingame täna koos sügavalt sisse ja välja.","Iga päev, mil sa liigud, on kingitus sulle endale.","Sina ja see vaikne hetk — rohkemat polegi vaja.","Ole õrn iseenda vastu. Teeme nii palju, kui on mõnus.","Sinu samm on alati õige samm. Alustame rahulikult.","Keha mäletab. Iga kord läheb veidi kergemaks.","Naerata pisut — ka see on osa harjutusest.","Sa hoolitsed enda eest, ja see teeb mind rõõmsaks.","Täna pole vaja olla parem kui eile. Lihtsalt ole siin.","Hingamine kannab sind. Lase tal juhtida.","Aeglus on tarkus. Mida aeglasem, seda parem.","Sa oled teel — päev-päevalt veidi tugevam ja rahulikum.","Anna endale need minutid. Maailm ootab ära.","Pehmus võidab. Ära pinguta, lihtsalt voola.","Tore sind näha. Teeme midagi head oma keha heaks.","Su tasakaal kasvab vaikselt, päev haaval.","Üks hingetõmme korraga. Rohkemat ei pea.","Lase õlgadel langeda. Oled kodus, oled turvaliselt.","Täna on hea päev ühe väikese sammu jaoks.","Sinu rahu on sinu jõud. Otsime selle koos üles.","Mõtlen sinu peale. Naudi seda vaikset hetke."];
+var BENEFIT=["Su õlad ja selg said täna liikuda — uni tuleb kergemini.","Vereringe sai hoogu. Käed ja jalad tänavad sind.","Tasakaal läks täna veidi kindlamaks. Iga kord aitab.","Su liigesed said õrna liikumise — see hoiab nad nooremana.","Sügav hingamine rahustas närvid. Päev tuleb kergem.","Keha ja meel said hetke koos olla. Haruldane kingitus.","Pinge õlgades sai vabaks. Tunned end kergemana.","Süda sai rahuliku liikumise — just nii, nagu talle meeldib.","Jalad said tugevamaks. Need kannavad sind kindlalt edasi.","Sa andsid endale rahu. See jääb sinuga kogu päevaks."];
+var MILE={7:"Nädal liikumist. Ole uhke iseenda üle.",14:"Kaks nädalat järjest hoolt. Imeline.",21:"Kolm nädalat. Keha on juba tänulik.",28:"Terve kuu! Sa lõid endale ilusa harjumuse.",50:"Viiskümmend päeva. See pole enam harjutus — see oled sina.",100:"Sada päeva liikumist. Sügav kummardus sulle."};
+function daysSinceLastComplete(){var t=new Date();for(var k=1;k<=90;k++){var d=new Date(t);d.setDate(t.getDate()-k);var key=dstr(d);if(S.days[key]&&S.days[key].complete)return k;}return 999;}
+function todayGreetingLine(){var dd=todayRec();if(dd.done.length===0&&S.stats.sessions>0&&daysSinceLastComplete()>=2)return "Tore, et tagasi tuled. Alustame rahulikult, ilma kiiruseta.";return GREET[dayNum()%GREET.length];}
+function tomorrowLine(){var d2=dayNum()+1;var w2=((Math.ceil(d2/7)-1)%8)+1;if(d2%3===0)return "Homme ootab uus väike oskus.";return "Homme jätkame — "+WEEKS[w2].title.toLowerCase()+".";}
+function setMood(m,btn){ensureDay(today()).mood=m;persist();var ps=btn.parentNode.querySelectorAll('button');for(var i=0;i<ps.length;i++)ps[i].classList.remove('sel');btn.classList.add('sel');}
+function shareDone(){try{if(navigator.share)navigator.share({title:'Tai Chi Iga Päev',text:'Tegin täna oma tai chi praktika ära.'}).catch(function(){});}catch(e){}}
+
 var LEARN=[
  ["Mis on tai chi?","Tai chi on iidne Hiina liikumiskunst — aeglased pehmed liigutused, rahulik hingamine ja kohalolu. See sobib igale vanusele ega nõua jõudu ega painduvust. Sa lihtsalt liigud rahulikult ja hingad.","Alused","yinyang"],
  ["Miks see on sulle hea","Tai chi parandab tasakaalu ja vähendab kukkumise ohtu, tugevdab õrnalt jalgu, leevendab pinget ja aitab paremini magada. Uuringud on neid kasusid kinnitanud ja Maailma Terviseorganisatsioon soovitab seda eakatele.","Tervis","health"],
@@ -427,7 +482,7 @@ var LEARN=[
    DAY / WEEK HELPERS
    ====================================================== */
 function dayNum(){var s=new Date(S.start),t=new Date();s.setHours(0,0,0,0);t.setHours(0,0,0,0);return Math.max(1,Math.round((t-s)/864e5)+1);}
-function weekNum(){return Math.min(Math.ceil(dayNum()/7),4);}
+function weekNum(){return ((Math.ceil(dayNum()/7)-1)%8)+1;}
 function exs(){return WEEKS[weekNum()].ex;}
 function ensureDay(d){if(!S.days[d])S.days[d]={done:[],complete:false};return S.days[d];}
 function todayRec(){return ensureDay(today());}
@@ -620,14 +675,18 @@ function viewToday(){
     +'<div class="hero-txt"><div class="greet">'+greeting()+'</div>'
     +'<h1>Tai Chi Iga Päev</h1>'
     +'<div class="date">'+dateStr+'</div>'
-    +'<div class="streak-chip">'+IC.flame+' '+(S.streak>0?S.streak+'. päev järjest':'Alusta täna')+'</div>'
+    +'<div class="streak-chip">'+IC.flame+' '+(S.stats.sessions>0?'Kokku '+S.stats.sessions+' päeva':'Alusta täna')+'</div>'
     +'</div></div>';
 
-  // start button
+  // greeting line + start + short option
+  h+='<div class="sonnote">'+todayGreetingLine()+'</div>';
+  var resume=(doneCount>0&&doneCount<list.length);
   h+='<button class="start-btn" onclick="startSession()">'
     +'<span class="play"><svg viewBox="0 0 24 24" width="22" height="22" style="fill:#F5EEDF"><path d="M8 5v14l11-7z"/></svg></span>'
-    +'<span class="stxt"><b>'+(doneCount>=list.length?'Korda tänast praktikat':'Alusta tänast praktikat')+'</b>'
-    +'<span>'+w+'. nädal · '+WEEKS[w].title+' · umbes '+totalMin+' min</span></span></button>';
+    +'<span class="stxt"><b>'+(doneCount>=list.length?'Korda tänast praktikat':(resume?'Jätka praktikat':'Alusta tänast praktikat'))+'</b>'
+    +'<span>'+(resume?'Jõudsid '+doneCount+'/'+list.length+' harjutuseni':w+'. nädal · '+WEEKS[w].title+' · umbes '+totalMin+' min')+'</span></span></button>';
+  if(doneCount<list.length)
+    h+='<button class="start-short" onclick="startSession(\'short\')">Väsinud täna? Tee lühike praktika (~10 min)</button>';
 
   // quote
   h+='<div class="quote"><div class="qt">'+q[0]+'</div><div class="qa">— '+q[1]+'</div></div>';
@@ -695,7 +754,7 @@ function viewProgress(){
 
   // stats
   h+='<div class="card"><div class="card-head"><h2>Statistika</h2></div><div class="stats">'
-    +'<div class="stat"><b>'+S.stats.sessions+'</b><span>praktikat kokku</span></div>'
+    +'<div class="stat"><b>'+S.stats.sessions+'</b><span>päeva liikumist</span></div>'
     +'<div class="stat"><b>'+S.stats.minutes+'</b><span>minutit kokku</span></div>'
     +'<div class="stat"><b>'+S.streak+'</b><span>päeva järjest</span></div>'
     +'<div class="stat"><b>'+S.best+'</b><span>parim seeria</span></div></div></div>';
@@ -795,12 +854,23 @@ setInterval(function(){
    ====================================================== */
 var SS={list:[],idx:0,rem:0,total:0,timer:null,paused:false,breath:null,wake:null,single:false};
 
-function startSession(single){
+function startSession(mode){
   audio();bell('start');
-  var list=exs();
-  if(typeof single==='number'){SS.list=[list[single]];SS.single=true;}
-  else{SS.list=list;SS.single=false;}
-  SS.idx=0;SS.paused=false;
+  var list=exs(),i;
+  SS.single=false;SS.short=false;
+  if(typeof mode==='number'){SS.list=[list[mode]];SS.single=true;SS.idx=0;}
+  else if(mode==='short'){
+    var br=null;for(i=0;i<list.length;i++){if(list[i].br){br=list[i];break;}}
+    var sh=[list[0]];if(br&&sh.indexOf(br)<0)sh.push(br);
+    var last=list[list.length-1];if(sh.indexOf(last)<0)sh.push(last);
+    SS.list=sh;SS.short=true;SS.idx=0;
+  }else{
+    SS.list=list;var dd=todayRec(),start=0;
+    for(i=0;i<list.length;i++){if(dd.done.indexOf(i)<0){start=i;break;}}
+    if(dd.done.length>=list.length)start=0;
+    SS.idx=start;
+  }
+  SS.paused=false;
   document.getElementById('session').classList.remove('finish');
   document.getElementById('session').classList.add('on');
   requestWake();
@@ -892,18 +962,21 @@ function pauseStep(){SS.paused=!SS.paused;document.getElementById('sPause').text
 function finishSession(){
   clearInterval(SS.timer);stopBreath();releaseWake();bell('end');
   if(SS.single){
-    // mark just this one done
     var e=SS.list[0],i=exs().indexOf(e),dd=todayRec();
     if(dd.done.indexOf(i)<0){toggleExercise(i);}
     closeSession();toast('Harjutus tehtud ✓');return;
   }
   completeDayFull();
+  var total=S.stats.sessions,mile=MILE[total],benefit=BENEFIT[dayNum()%BENEFIT.length];
   var fin=document.getElementById('sFinish');
-  fin.innerHTML='<div style="opacity:.85">'+lsym('yinyang')+'</div>'
-    +'<h2>Tubli!</h2>'
-    +'<p>Tänane praktika on tehtud. Anna kehale hetk, et rahu püsiks.</p>'
-    +'<div class="fstats"><div><b>'+S.streak+'</b><span>päeva järjest</span></div>'
-    +'<div><b>'+S.stats.sessions+'</b><span>praktikat kokku</span></div></div>'
+  fin.innerHTML=(mile?'<div class="mile" style="opacity:.9">'+lsym('yinyang')+'<h2>'+mile+'</h2></div>'
+                     :'<div style="opacity:.85">'+lsym('yinyang')+'</div><h2>Tubli!</h2>')
+    +'<p>'+benefit+'</p>'
+    +'<div class="moodq">Kuidas tunned end?</div>'
+    +'<div class="moods"><button onclick="setMood(0,this)">Rahulik</button><button onclick="setMood(1,this)">Hea</button><button onclick="setMood(2,this)">Väsinud</button></div>'
+    +'<div class="fstats"><div><b>'+total+'</b><span>päeva liikumist</span></div><div><b>'+S.streak+'</b><span>päeva järjest</span></div></div>'
+    +'<div class="tomorrow">'+tomorrowLine()+'</div>'
+    +(navigator.share?'<button class="fbtn-ghost" onclick="shareDone()">Jaga, et tegid ära</button>':'')
     +'<button class="fbtn" onclick="closeSession()">Valmis</button>';
   document.getElementById('session').classList.add('finish');
 }
@@ -928,6 +1001,7 @@ document.getElementById('sPause').onclick=pauseStep;
 applyTheme();
 renderNav();
 render();
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
 </script>
 </body>
 </html>

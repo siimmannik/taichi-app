@@ -1,0 +1,26 @@
+{
+  "name": "Tai Chi Iga Päev",
+  "short_name": "Tai Chi",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "et",
+  "background_color": "#F1EADC",
+  "theme_color": "#3A3530",
+  "description": "Rahulik igapäevane tai chi praktika.",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

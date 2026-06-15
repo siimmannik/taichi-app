@@ -918,7 +918,7 @@ function loadStep(){
   var b=document.getElementById('sBody');
 
   var center;
-  if(e.br){
+  if(e.br&&e.a==='breathe'){
     center='<div class="breath"><div class="ring2"></div><div class="orb" id="bOrb"></div><div class="blabel" id="bLabel">Valmistu…</div></div>';
   }else{
     center=sessionDemo(e)
@@ -941,7 +941,7 @@ function loadStep(){
   document.getElementById('sNext').textContent=(SS.idx>=SS.list.length-1)?'Lõpeta ✓':'Edasi ›';
   document.getElementById('sPause').textContent='Paus';
 
-  if(e.br)startBreath();
+  if(e.br&&e.a==='breathe')startBreath();
   startTimer();
 }
 

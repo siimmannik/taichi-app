@@ -343,6 +343,15 @@ img{max-width:100%;display:block}
 .duoA{animation:duoFadeA 6.5s ease-in-out infinite}
 .duoB{animation:duoFadeB 6.5s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){.duoA,.duoB{animation:none}.duoB{opacity:0}}
+
+/* ===== breathing photo + gentle pulse ===== */
+.s-demo.breathpic,.s-demo.photo{position:relative;width:100%;max-width:14rem;aspect-ratio:424/760;margin:.2rem auto;border-radius:1rem;overflow:hidden;border:1px solid var(--line);box-shadow:0 2px 10px var(--shadow)}
+.bphoto{width:100%;height:100%;object-fit:cover;transform-origin:center;transition:transform .12s linear;display:block}
+.blabel2{position:absolute;left:0;right:0;bottom:.7rem;text-align:center;color:#fff;font-family:'Noto Serif JP',serif;font-size:1.15rem;text-shadow:0 1px 8px rgba(0,0,0,.65)}
+.s-demo.photo img{width:100%;height:100%;object-fit:cover;display:block;transform-origin:center}
+@keyframes breathePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
+.s-demo.photo.pulse img{animation:breathePulse 9s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.s-demo.photo.pulse img{animation:none}}
 </style>
 </head>
 <body>
@@ -662,14 +671,16 @@ function demo(e,big){
   return '<div class="figbox'+(big?' lg':'')+'">'+figure(e.a)+'</div>';
 }
 window.__figFallback=function(a){return '<div class="figbox">'+figure(a)+'</div>';};
-var DUO={raise:['move-raise','move-wuji'],gather:['move-gather','move-meditate'],knee:['move-knee','move-shift'],cloud:['move-cloud','move-cloud2'],shift:['move-shift','move-shift2']};
+window.__imgFail=function(img){img.parentNode.outerHTML='<div class="s-demo"><div class="figbox lg">'+figure(img.getAttribute('data-anim'))+'</div></div>';};
+var DUO={raise:['move-raise','move-wuji'],gather:['move-gather','move-meditate'],knee:['move-knee','move-shift'],cloud:['move-cloud','move-cloud2'],shift:['move-shift','move-shift2'],stretch:['move-stretch','move-stretch2']};
+var FIGMOVE={warmup:1,neck:1};
 function sessionDemo(e){
-  if(S.set.photos&&e.img&&DUO[e.img]){
+  if(S.set.photos&&e.img&&!FIGMOVE[e.a]&&DUO[e.img]){
     var f=DUO[e.img];
     return '<div class="s-demo duo"><img class="duoA" src="images/'+f[0]+'.jpg" alt=""><img class="duoB" src="images/'+f[1]+'.jpg" alt=""></div>';
   }
-  if(S.set.photos&&e.img){
-    return '<div class="s-demo"><img class="figphoto" src="images/move-'+e.img+'.jpg" alt="'+e.n+'" onerror="this.outerHTML=window.__figFallback(\''+e.a+'\')"></div>';
+  if(S.set.photos&&e.img&&!FIGMOVE[e.a]){
+    return '<div class="s-demo photo pulse"><img src="images/move-'+e.img+'.jpg" data-anim="'+e.a+'" alt="'+e.n+'" onerror="window.__imgFail(this)"></div>';
   }
   return '<div class="s-demo"><div class="figbox lg">'+figure(e.a)+'</div></div>';
 }
@@ -934,7 +945,7 @@ function loadStep(){
 
   var center;
   if(e.br&&e.a==='breathe'){
-    center='<div class="breath"><div class="ring2"></div><div class="orb" id="bOrb"></div><div class="blabel" id="bLabel">Valmistu…</div></div>';
+    center='<div class="s-demo breathpic"><img id="bPhoto" class="bphoto" src="images/move-breathe.jpg" alt="" onerror="this.style.opacity=0"><div class="blabel2" id="bLabel">Valmistu…</div></div>';
   }else{
     center=sessionDemo(e)
       +'<div class="s-timer"><svg width="136" height="136" viewBox="0 0 136 136">'
@@ -978,17 +989,16 @@ function startTimer(){
 
 /* breathing controller */
 function startBreath(){
-  var orb=document.getElementById('bOrb'),lab=document.getElementById('bLabel');
-  if(!orb)return;
-  var start=performance.now(),cycle=10000; // 4s in, 6s out
+  var el=document.getElementById('bPhoto'),lab=document.getElementById('bLabel');
+  if(!el)return;
+  var start=performance.now(),cycle=10000;
   SS.breath=setInterval(function(){
     if(SS.paused)return;
-    var p=((performance.now()-start)%cycle)/cycle; // 0..1
-    var scale,txt;
-    if(p<0.4){var k=p/0.4;scale=0.7+0.55*easeInOut(k);txt='Hinga sisse';}
-    else{var k2=(p-0.4)/0.6;scale=1.25-0.55*easeInOut(k2);txt='Hinga välja';}
-    orb.style.transform='scale('+scale+')';
-    if(lab.textContent!==txt)lab.textContent=txt;
+    var p=((performance.now()-start)%cycle)/cycle,scale,txt;
+    if(p<0.4){var k=p/0.4;scale=1.0+0.09*easeInOut(k);txt='Hinga sisse';}
+    else{var k2=(p-0.4)/0.6;scale=1.09-0.09*easeInOut(k2);txt='Hinga välja';}
+    el.style.transform='scale('+scale+')';
+    if(lab&&lab.textContent!==txt)lab.textContent=txt;
   },60);
 }
 function easeInOut(t){return t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}

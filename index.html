@@ -1088,7 +1088,7 @@ document.getElementById('sPause').onclick=pauseStep;
 applyTheme();
 renderNav();
 render();
-if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});var __refreshing=false;navigator.serviceWorker.addEventListener('controllerchange',function(){if(__refreshing)return;__refreshing=true;location.reload();});}
 </script>
 </body>
 </html>

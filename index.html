@@ -672,8 +672,8 @@ function demo(e,big){
 }
 window.__figFallback=function(a){return '<div class="figbox">'+figure(a)+'</div>';};
 window.__imgFail=function(img){img.parentNode.outerHTML='<div class="s-demo"><div class="figbox lg">'+figure(img.getAttribute('data-anim'))+'</div></div>';};
-var DUO={raise:['move-raise','move-wuji'],gather:['move-gather','move-meditate'],knee:['move-knee','move-shift'],cloud:['move-cloud','move-cloud2'],shift:['move-shift','move-shift2'],stretch:['move-stretch','move-stretch2']};
-var FIGMOVE={warmup:1,neck:1};
+var DUO={raise:['move-raise','move-wuji'],gather:['move-gather','move-meditate'],knee:['move-knee','move-shift'],cloud:['move-cloud','move-cloud2'],shift:['move-shift','move-shift2']};
+var FIGMOVE={warmup:1,neck:1,stretch:1};
 function sessionDemo(e){
   if(S.set.photos&&e.img&&!FIGMOVE[e.a]&&DUO[e.img]){
     var f=DUO[e.img];

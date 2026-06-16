@@ -344,6 +344,17 @@ img{max-width:100%;display:block}
 .duoB{animation:duoFadeB 6.5s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){.duoA,.duoB{animation:none}.duoB{opacity:0}}
 
+/* ===== three-frame head-tilt cycle (cool-down stretch) ===== */
+.s-demo.trio{position:relative;width:100%;max-width:14rem;aspect-ratio:424/760;margin:.2rem auto}
+.s-demo.trio img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:1rem;border:1px solid var(--line);box-shadow:0 2px 10px var(--shadow)}
+@keyframes triFadeA{0%,12%{opacity:1}25%{opacity:0}37%{opacity:0}50%{opacity:1}62%{opacity:1}75%{opacity:0}87%{opacity:0}100%{opacity:1}}
+@keyframes triFadeB{0%,12%{opacity:0}25%,37%{opacity:1}50%,100%{opacity:0}}
+@keyframes triFadeC{0%,62%{opacity:0}75%,87%{opacity:1}100%{opacity:0}}
+.triA{animation:triFadeA 9s ease-in-out infinite}
+.triB{animation:triFadeB 9s ease-in-out infinite}
+.triC{animation:triFadeC 9s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.triA,.triB,.triC{animation:none}.triB,.triC{opacity:0}}
+
 /* ===== breathing photo + gentle pulse ===== */
 .s-demo.breathpic,.s-demo.photo{position:relative;width:100%;max-width:14rem;aspect-ratio:424/760;margin:.2rem auto;border-radius:1rem;overflow:hidden;border:1px solid var(--line);box-shadow:0 2px 10px var(--shadow)}
 .bphoto{width:100%;height:100%;object-fit:cover;transform-origin:center;transition:transform .12s linear;display:block}
@@ -673,8 +684,13 @@ function demo(e,big){
 window.__figFallback=function(a){return '<div class="figbox">'+figure(a)+'</div>';};
 window.__imgFail=function(img){img.parentNode.outerHTML='<div class="s-demo"><div class="figbox lg">'+figure(img.getAttribute('data-anim'))+'</div></div>';};
 var DUO={raise:['move-raise','move-wuji'],gather:['move-gather','move-meditate'],knee:['move-knee','move-shift'],cloud:['move-cloud','move-cloud2'],shift:['move-shift','move-shift2']};
-var FIGMOVE={warmup:1,neck:1,stretch:1};
+var TRIO={stretch:['move-stretch','move-stretchl','move-stretchr']};
+var FIGMOVE={warmup:1,neck:1};
 function sessionDemo(e){
+  if(S.set.photos&&e.img&&TRIO[e.img]){
+    var t=TRIO[e.img];
+    return '<div class="s-demo trio"><img class="triA" src="images/'+t[0]+'.jpg" alt=""><img class="triB" src="images/'+t[1]+'.jpg" alt=""><img class="triC" src="images/'+t[2]+'.jpg" alt=""></div>';
+  }
   if(S.set.photos&&e.img&&!FIGMOVE[e.a]&&DUO[e.img]){
     var f=DUO[e.img];
     return '<div class="s-demo duo"><img class="duoA" src="images/'+f[0]+'.jpg" alt=""><img class="duoB" src="images/'+f[1]+'.jpg" alt=""></div>';

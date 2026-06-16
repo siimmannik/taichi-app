@@ -334,6 +334,15 @@ img{max-width:100%;display:block}
 .s-demo{position:relative;max-width:15rem}
 .s-ref{position:absolute;top:-.4rem;right:-.7rem;width:3.6rem;height:5.2rem;object-fit:cover;border-radius:.7rem;border:2px solid var(--paper);box-shadow:0 3px 10px var(--shadow);background:var(--paper2)}
 .figbox.lg .figsvg{max-width:15rem}
+
+/* ===== cross-fade illustrated motion ===== */
+.s-demo.duo{position:relative;width:100%;max-width:14rem;aspect-ratio:424/760;margin:.2rem auto}
+.s-demo.duo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:1rem;border:1px solid var(--line);box-shadow:0 2px 10px var(--shadow)}
+@keyframes duoFadeA{0%,18%{opacity:1}50%{opacity:0}82%,100%{opacity:1}}
+@keyframes duoFadeB{0%,18%{opacity:0}50%{opacity:1}82%,100%{opacity:0}}
+.duoA{animation:duoFadeA 6.5s ease-in-out infinite}
+.duoB{animation:duoFadeB 6.5s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.duoA,.duoB{animation:none}.duoB{opacity:0}}
 </style>
 </head>
 <body>
@@ -653,10 +662,16 @@ function demo(e,big){
   return '<div class="figbox'+(big?' lg':'')+'">'+figure(e.a)+'</div>';
 }
 window.__figFallback=function(a){return '<div class="figbox">'+figure(a)+'</div>';};
+var DUO={raise:['move-raise','move-wuji'],gather:['move-gather','move-meditate'],knee:['move-knee','move-shift'],cloud:['move-cloud','move-cloud2'],shift:['move-shift','move-shift2']};
 function sessionDemo(e){
-  return '<div class="s-demo"><div class="figbox lg">'+figure(e.a)+'</div>'
-    +((S.set.photos&&e.img)?'<img class="s-ref" src="images/move-'+e.img+'.jpg" alt="näidis" onerror="this.style.display=\'none\'">':'')
-    +'</div>';
+  if(S.set.photos&&e.img&&DUO[e.img]){
+    var f=DUO[e.img];
+    return '<div class="s-demo duo"><img class="duoA" src="images/'+f[0]+'.jpg" alt=""><img class="duoB" src="images/'+f[1]+'.jpg" alt=""></div>';
+  }
+  if(S.set.photos&&e.img){
+    return '<div class="s-demo"><img class="figphoto" src="images/move-'+e.img+'.jpg" alt="'+e.n+'" onerror="this.outerHTML=window.__figFallback(\''+e.a+'\')"></div>';
+  }
+  return '<div class="s-demo"><div class="figbox lg">'+figure(e.a)+'</div></div>';
 }
 
 /* ======================================================

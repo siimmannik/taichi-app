@@ -355,6 +355,10 @@ img{max-width:100%;display:block}
 .triC{animation:triFadeC 9s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){.triA,.triB,.triC{animation:none}.triB,.triC{opacity:0}}
 
+/* ===== single-image flipbook demo (no overlap, ever) ===== */
+.s-demo.flip{position:relative;width:100%;max-width:14rem;aspect-ratio:424/760;margin:.2rem auto;border-radius:1rem;overflow:hidden;border:1px solid var(--line);box-shadow:0 2px 10px var(--shadow);background:var(--paper2)}
+.s-demo.flip img{width:100%;height:100%;object-fit:cover;display:block}
+
 /* ===== breathing photo + gentle pulse ===== */
 .s-demo.breathpic,.s-demo.photo{position:relative;width:100%;max-width:14rem;aspect-ratio:424/760;margin:.2rem auto;border-radius:1rem;overflow:hidden;border:1px solid var(--line);box-shadow:0 2px 10px var(--shadow)}
 .bphoto{width:100%;height:100%;object-fit:cover;transform-origin:center;transition:transform .12s linear;display:block}
@@ -687,13 +691,13 @@ var DUO={warmup:['move-warmup','move-warmup2'],raise:['move-raise','move-wuji'],
 var TRIO={stretch:['move-stretch','move-stretchl','move-stretchr']};
 var FIGMOVE={neck:1};
 function sessionDemo(e){
-  if(S.set.photos&&e.img&&TRIO[e.img]){
-    var t=TRIO[e.img];
-    return '<div class="s-demo trio"><img class="triA" src="images/'+t[0]+'.jpg" alt=""><img class="triB" src="images/'+t[1]+'.jpg" alt=""><img class="triC" src="images/'+t[2]+'.jpg" alt=""></div>';
+  var frames=null;
+  if(S.set.photos&&e.img&&!FIGMOVE[e.a]){
+    if(TRIO[e.img])frames=TRIO[e.img];
+    else if(DUO[e.img])frames=DUO[e.img];
   }
-  if(S.set.photos&&e.img&&!FIGMOVE[e.a]&&DUO[e.img]){
-    var f=DUO[e.img];
-    return '<div class="s-demo duo"><img class="duoA" src="images/'+f[0]+'.jpg" alt=""><img class="duoB" src="images/'+f[1]+'.jpg" alt=""></div>';
+  if(frames){
+    return '<div class="s-demo flip"><img id="flipImg" data-frames="'+frames.join(',')+'" data-anim="'+e.a+'" src="images/'+frames[0]+'.jpg" alt="'+e.n+'" onerror="window.__imgFail(this)"></div>';
   }
   if(S.set.photos&&e.img&&!FIGMOVE[e.a]){
     return '<div class="s-demo photo pulse"><img src="images/move-'+e.img+'.jpg" data-anim="'+e.a+'" alt="'+e.n+'" onerror="window.__imgFail(this)"></div>';
@@ -921,7 +925,7 @@ setInterval(function(){
 /* ======================================================
    GUIDED SESSION
    ====================================================== */
-var SS={list:[],idx:0,rem:0,total:0,timer:null,paused:false,breath:null,wake:null,single:false};
+var SS={list:[],idx:0,rem:0,total:0,timer:null,flip:null,paused:false,breath:null,wake:null,single:false};
 
 function startSession(mode){
   audio();bell('start');
@@ -953,7 +957,7 @@ function requestWake(){
 function releaseWake(){try{if(SS.wake){SS.wake.release();SS.wake=null;}}catch(e){}}
 
 function loadStep(){
-  stopBreath();clearInterval(SS.timer);
+  stopBreath();stopFlip();clearInterval(SS.timer);
   var e=SS.list[SS.idx];
   SS.total=e.m*60;SS.rem=SS.total;SS.paused=false;
   var realIdx=SS.single?exs().indexOf(e):SS.idx;
@@ -984,6 +988,7 @@ function loadStep(){
   document.getElementById('sPause').textContent='Paus';
 
   if(e.br&&e.a==='breathe')startBreath();
+  startFlip();
   startTimer();
 }
 
@@ -1019,6 +1024,20 @@ function startBreath(){
 }
 function easeInOut(t){return t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
 function stopBreath(){if(SS.breath){clearInterval(SS.breath);SS.breath=null;}}
+function stopFlip(){if(SS.flip){clearInterval(SS.flip);SS.flip=null;}}
+function startFlip(){
+  stopFlip();
+  var img=document.getElementById('flipImg');if(!img)return;
+  var fr=(img.getAttribute('data-frames')||'').split(',').filter(Boolean);
+  if(fr.length<2)return;
+  var i=0;
+  SS.flip=setInterval(function(){
+    var im=document.getElementById('flipImg');
+    if(!im){stopFlip();return;}
+    i=(i+1)%fr.length;
+    im.src='images/'+fr[i]+'.jpg';
+  },2200);
+}
 
 function nextStep(){
   if(SS.idx>=SS.list.length-1){finishSession();return;}
@@ -1028,7 +1047,7 @@ function prevStep(){if(SS.idx>0){SS.idx--;loadStep();}}
 function pauseStep(){SS.paused=!SS.paused;document.getElementById('sPause').textContent=SS.paused?'Jätka':'Paus';}
 
 function finishSession(){
-  clearInterval(SS.timer);stopBreath();releaseWake();bell('end');
+  clearInterval(SS.timer);stopBreath();stopFlip();releaseWake();bell('end');
   if(SS.single){
     var e=SS.list[0],i=exs().indexOf(e),dd=todayRec();
     if(dd.done.indexOf(i)<0){toggleExercise(i);}
@@ -1050,7 +1069,7 @@ function finishSession(){
 }
 
 function closeSession(){
-  clearInterval(SS.timer);stopBreath();releaseWake();
+  clearInterval(SS.timer);stopBreath();stopFlip();releaseWake();
   document.getElementById('session').classList.remove('on','finish');
   go(0);
 }

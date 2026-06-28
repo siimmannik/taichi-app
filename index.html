@@ -12,24 +12,28 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;400;600&family=Noto+Sans:wght@300;400;500;600&display=swap');
 
-/* ============ THEME TOKENS ============ */
+/* ============ THEME TOKENS & DYNAMIC FLOW DESIGN ============ */
 :root{
-  --bg:#F1EADC; --bg2:#E9E0CF;
-  --paper:#FFFDF8; --paper2:#FAF5EA;
-  --ink:#33302B; --ink2:#5C4D3C; --soft:#8C8071;
-  --line:#E6DCCB;
-  --gold:#B2935F; --green:#7C9869; --terra:#C2714F; --terra-soft:#E4C6B5;
-  --shadow:rgba(90,70,50,.10);
-  --good:#7C9869;
+  --bg:#F6F0E5; --bg2:#EFE4D6;
+  --paper:#FFFDF9; --paper2:#FAF3E6;
+  --ink:#2C2621; --ink2:#1B365D; --soft:#7C7063;
+  --line:#E5DAC6;
+  --gold:#D9822B; --amber:#D9822B; --amber-gold:#D9822B; --amber-light:#F4A750; --amber-soft:#FDF3E7;
+  --azure:#1B365D; --azure-light:#2C4D6F;
+  --green:#2A7B58; --emerald:#2A7B58; --terra:#C2714F; --terra-soft:#E4C6B5;
+  --shadow:rgba(60,45,30,.08); --shadow-lg:rgba(27,54,93,.12);
+  --good:#2A7B58;
 }
 [data-theme="dark"]{
-  --bg:#1E1B17; --bg2:#252019;
-  --paper:#2A2620; --paper2:#322C24;
-  --ink:#EDE4D5; --ink2:#E2D5BF; --soft:#A89A84;
-  --line:#39322A;
-  --gold:#C7A877; --green:#94B07F; --terra:#D88E6E; --terra-soft:#5a4034;
-  --shadow:rgba(0,0,0,.35);
-  --good:#94B07F;
+  --bg:#161A22; --bg2:#1F2430;
+  --paper:#242B38; --paper2:#2C3445;
+  --ink:#EAE6DF; --ink2:#EBA85A; --soft:#A0A9B8;
+  --line:#343E52;
+  --gold:#EBA85A; --amber:#EBA85A; --amber-gold:#EBA85A; --amber-light:#F7C488; --amber-soft:#382C1E;
+  --azure:#4A7BB0; --azure-light:#6B9BD2;
+  --green:#3DA87B; --emerald:#3DA87B; --terra:#E58A66; --terra-soft:#4A3228;
+  --shadow:rgba(0,0,0,.35); --shadow-lg:rgba(0,0,0,.4);
+  --good:#3DA87B;
 }
 html[data-text="normal"]{font-size:18px}
 html[data-text="large"]{font-size:21px}
@@ -40,29 +44,156 @@ html,body{background:var(--bg);color:var(--ink)}
 body{
   font-family:'Noto Sans','Segoe UI',system-ui,sans-serif;
   min-height:100vh;
-  padding-bottom:calc(5.2rem + env(safe-area-inset-bottom,0));
+  padding-bottom:calc(5.5rem + env(safe-area-inset-bottom,0));
   line-height:1.6;
   transition:background .4s ease,color .4s ease;
 }
-.app{max-width:600px;margin:0 auto;padding:0 1rem 1rem}
+.app{max-width:960px;margin:0 auto;padding:0 1.2rem 1.5rem}
 .serif{font-family:'Noto Serif JP',serif}
 img{max-width:100%;display:block}
 
-/* ============ HERO ============ */
-.hero{
-  position:relative;margin:0 -1rem 1.1rem;height:13.5rem;overflow:hidden;
-  background:linear-gradient(135deg,var(--ink2),var(--ink));
+/* ============ BRAND HEADER ============ */
+.brand-header{
+  position:relative;display:flex;align-items:center;justify-content:space-between;
+  padding:1.2rem 0.4rem 0.8rem;margin-bottom:1rem;overflow:hidden;
 }
-.hero img{width:100%;height:100%;object-fit:cover;object-position:center 35%;opacity:.96}
-.hero::after{content:'';position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(28,24,20,.05) 0%,rgba(28,24,20,.20) 45%,rgba(28,24,20,.72) 100%);}
-.hero-txt{position:absolute;left:1.2rem;right:1.2rem;bottom:.9rem;z-index:2;color:#F5EEDF}
-.hero-txt .greet{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;opacity:.85}
-.hero-txt h1{font-family:'Noto Serif JP',serif;font-weight:400;font-size:1.7rem;letter-spacing:.06em;margin-top:.15rem;text-shadow:0 1px 8px rgba(0,0,0,.35)}
-.hero-txt .date{font-size:.82rem;opacity:.9;margin-top:.15rem}
-.streak-chip{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,253,248,.16);
-  border:1px solid rgba(255,253,248,.4);backdrop-filter:blur(4px);
-  color:#F5EEDF;padding:.25rem .7rem;border-radius:2rem;font-size:.78rem;margin-top:.55rem}
+.brand-header-bg{
+  position:absolute;top:-25px;right:-20px;width:300px;height:140px;
+  pointer-events:none;opacity:.85;z-index:0;
+}
+.brand-left{display:flex;align-items:center;gap:1.1rem;position:relative;z-index:1}
+.menu-trigger{
+  background:none;border:none;color:var(--amber);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;padding:.4rem;border-radius:.6rem;
+  transition:transform .2s,background .2s;
+}
+.menu-trigger:hover{background:var(--paper2)}
+.menu-trigger:active{transform:scale(.92)}
+.brand-title{
+  font-family:'Noto Serif JP',serif;font-weight:600;font-size:1.65rem;
+  letter-spacing:.08em;color:var(--amber);text-transform:uppercase;margin:0;
+}
+
+/* ============ DYNAMIC FLOW DASHBOARD (TWO CARDS) ============ */
+.df-dashboard{
+  display:grid;grid-template-columns:1fr;gap:1.3rem;margin-bottom:1.5rem;
+}
+@media (min-width: 740px){
+  .df-dashboard{grid-template-columns:1.1fr .9fr;}
+}
+
+.df-card{
+  background:var(--paper);border-radius:1.3rem;padding:1.3rem;
+  border:1px solid var(--line);box-shadow:0 4px 20px var(--shadow);
+  display:flex;flex-direction:column;position:relative;overflow:hidden;
+}
+.df-card-title{
+  font-family:'Noto Serif JP',serif;font-size:1.05rem;font-weight:600;
+  color:var(--amber);text-transform:uppercase;letter-spacing:.05em;
+  text-align:center;margin-bottom:1rem;
+}
+
+/* Left Card: Visual Demo */
+.df-visual-box{
+  position:relative;width:100%;border-radius:1rem;overflow:hidden;
+  box-shadow:0 3px 14px rgba(0,0,0,.14);border:1px solid var(--line);
+  background:var(--paper2);aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;
+}
+.df-visual-box img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* Right Card: Breathing Guide */
+.df-breath-box{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  flex:1;min-height:220px;position:relative;padding:.5rem 0;
+}
+.breath-circle-wrap{
+  position:relative;width:13rem;height:13rem;display:flex;align-items:center;justify-content:center;
+}
+.breath-ring-svg{position:absolute;inset:0;width:100%;height:100%}
+.breath-text-top{
+  position:absolute;top:1.3rem;font-family:'Noto Serif JP',serif;
+  font-size:.82rem;letter-spacing:.1em;color:var(--azure);font-weight:600;text-transform:uppercase;
+}
+.breath-text-bottom{
+  position:absolute;bottom:1.3rem;font-family:'Noto Serif JP',serif;
+  font-size:.82rem;letter-spacing:.1em;color:var(--azure);font-weight:600;text-transform:uppercase;
+}
+.breath-wave-center{width:7.5rem;height:3.5rem;display:flex;align-items:center;justify-content:center}
+
+/* Animated Waveform SVG */
+@keyframes wavePulse {
+  0%,100%{transform:scaleY(.85) scaleX(.95);opacity:.8}
+  50%{transform:scaleY(1.25) scaleX(1.08);opacity:1}
+}
+.wave-path-amber{animation:wavePulse 4s ease-in-out infinite;transform-origin:center}
+.wave-path-azure{animation:wavePulse 4s ease-in-out infinite 0.5s;transform-origin:center}
+
+/* ============ ORGANIC CURVED PROGRESS DECK ============ */
+.df-deck{
+  background:var(--paper);border-radius:1.4rem;padding:1.2rem 1.4rem 1.4rem;
+  border:1px solid var(--line);box-shadow:0 4px 20px var(--shadow);
+  margin-bottom:1.5rem;position:relative;
+}
+.df-track-container{
+  position:relative;width:100%;height:4.2rem;margin-bottom:0.6rem;
+  display:flex;align-items:center;
+}
+.df-track-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.df-step-nodes{
+  position:absolute;inset:0;display:flex;align-items:center;
+  justify-content:space-between;padding:0 1rem;z-index:2;
+}
+.df-node{
+  width:2.4rem;height:2.4rem;border-radius:50%;background:var(--paper2);
+  border:2px solid var(--amber);color:var(--amber);display:flex;align-items:center;
+  justify-content:center;font-size:.85rem;font-weight:600;cursor:pointer;
+  transition:transform .2s,background .2s;
+}
+.df-node.active{
+  background:var(--amber);color:#FFFDF9;transform:scale(1.15);
+  box-shadow:0 3px 10px rgba(217,130,43,.35);
+}
+.df-node.done{background:var(--azure);border-color:var(--azure);color:#FFFDF9}
+
+.df-meta-row{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:.8rem;padding:0 .5rem;
+}
+.df-progress-text{
+  font-family:'Noto Serif JP',serif;font-size:1.1rem;font-weight:600;
+  color:var(--ink);letter-spacing:.05em;
+}
+.df-user-chip{
+  display:flex;align-items:center;gap:.5rem;background:var(--paper2);
+  border:1px solid var(--line);padding:.4rem .9rem;border-radius:2rem;
+  font-size:.82rem;font-weight:600;color:var(--ink);cursor:pointer;
+  letter-spacing:.04em;transition:background .2s;
+}
+.df-user-chip:hover{background:var(--bg2)}
+
+/* ============ MINIMALIST CONTROLS ============ */
+.df-controls{
+  display:flex;align-items:center;justify-content:center;gap:1.2rem;padding-top:.4rem;
+}
+.df-ctrl-btn{
+  border:none;background:transparent;color:var(--amber);cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:.5rem;border-radius:50%;transition:transform .15s,color .15s;
+}
+.df-ctrl-btn:hover{color:var(--azure);transform:scale(1.08)}
+.df-ctrl-btn:active{transform:scale(.95)}
+.df-ctrl-btn svg{width:1.8rem;height:1.8rem;fill:currentColor}
+.df-ctrl-sub{font-size:.68rem;font-weight:700;margin-top:-2px}
+
+.df-ctrl-play{
+  width:3.6rem;height:3.6rem;border-radius:50%;background:var(--azure);
+  color:#FFFDF9;border:none;cursor:pointer;display:flex;align-items:center;
+  justify-content:center;box-shadow:0 4px 14px var(--shadow-lg);
+  transition:transform .15s,background .2s;
+}
+.df-ctrl-play:hover{background:var(--amber);transform:scale(1.06)}
+.df-ctrl-play:active{transform:scale(.95)}
+.df-ctrl-play svg{width:1.6rem;height:1.6rem;fill:#FFFDF9}
 
 /* ============ CARDS ============ */
 .card{
@@ -381,10 +512,12 @@ img{max-width:100%;display:block}
     <div class="s-count" id="sCount"></div>
   </div>
   <div class="s-body" id="sBody"></div>
-  <div class="s-ctrls" id="sCtrls">
-    <button class="s-prev" id="sPrev" aria-label="Eelmine">‹</button>
-    <button class="s-pause" id="sPause">Paus</button>
-    <button class="s-next" id="sNext">Edasi ›</button>
+  <div class="df-controls" id="sCtrls" style="padding:1rem 0;">
+    <button class="df-ctrl-btn" id="sPrev" title="Eelmine"><svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
+    <button class="df-ctrl-btn" onclick="SS.seek(-10)" title="Tagasi 10s"><svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg><span class="df-ctrl-sub">10s</span></button>
+    <button class="df-ctrl-play" id="sPause" title="Mängi/Paus"><svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg></button>
+    <button class="df-ctrl-btn" onclick="SS.seek(10)" title="Edasi 10s"><svg viewBox="0 0 24 24"><path d="M12 5V1l5 5-5 5V7c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6h2c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z"/></svg><span class="df-ctrl-sub">10s</span></button>
+    <button class="df-ctrl-btn" id="sNext" title="Järgmine"><svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
   </div>
   <div class="s-finish" id="sFinish"></div>
 </div>
@@ -735,29 +868,82 @@ function viewToday(){
   var dateStr=new Date().toLocaleDateString('et-EE',{weekday:'long',day:'numeric',month:'long'});
   var totalMin=list.reduce(function(s,e){return s+e.m;},0);
   var q=QUOTES[d%QUOTES.length],tip=TIPS[d%TIPS.length];
-  var doneCount=dd.done.length;
+  var doneCount=dd.done.length, totalCount=list.length;
+  var currentStepNum = Math.min(doneCount + 1, totalCount);
 
-  var h='<div class="hero"><img src="images/hero.jpg" alt="" onerror="this.style.display=\'none\'">'
-    +'<div class="hero-txt"><div class="greet">'+greeting()+'</div>'
-    +'<h1>Tai Chi Iga Päev</h1>'
-    +'<div class="date">'+dateStr+'</div>'
-    +'<div class="streak-chip">'+IC.flame+' '+(S.stats.sessions>0?'Kokku '+S.stats.sessions+' päeva':'Alusta täna')+'</div>'
+  var h='<div class="brand-header">'
+    +'<svg class="brand-header-bg" viewBox="0 0 300 140" fill="none"><path d="M50 -20 C120 40, 200 10, 320 80 C260 140, 180 90, 80 140 C10 100, -20 40, 50 -20Z" fill="url(#gradAmber)" opacity="0.12"/><defs><linearGradient id="gradAmber" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#D9822B"/><stop offset="100%" stop-color="#1B365D"/></linearGradient></defs></svg>'
+    +'<div class="brand-left">'
+    +'<button class="menu-trigger" onclick="go(3)" aria-label="Menüü"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>'
+    +'<h1 class="brand-title">TAI CHI IGA PÄEV</h1>'
     +'</div></div>';
 
-  // greeting line + start + short option
-  h+='<div class="sonnote">'+todayGreetingLine()+'</div>';
+  // 1. DYNAMIC FLOW DASHBOARD (TWO CARDS)
+  h+='<div class="df-dashboard">';
+  
+  // Left Card: Video / Photo Visual
+  h+='<div class="df-card">'
+    +'<div class="df-card-title">TÄNANE RUTIIN: VOOLAV HARMOONIA</div>'
+    +'<div class="df-visual-box"><img src="images/flow_harmony.jpg" alt="Voolav Harmoonia"></div>'
+    +'</div>';
+    
+  // Right Card: Breathing Guide
+  h+='<div class="df-card">'
+    +'<div class="df-card-title">BREATHING GUIDE</div>'
+    +'<div class="df-breath-box">'
+    +'<div class="breath-circle-wrap">'
+    +'<svg class="breath-ring-svg" viewBox="0 0 200 200">'
+    +'<path d="M100 10 A90 90 0 0 0 100 190" fill="none" stroke="#D9822B" stroke-width="6" stroke-linecap="round"/>'
+    +'<path d="M100 190 A90 90 0 0 0 100 10" fill="none" stroke="#1B365D" stroke-width="6" stroke-linecap="round"/>'
+    +'</svg>'
+    +'<div class="breath-text-top">HINGAKE SISSE...</div>'
+    +'<div class="breath-wave-center">'
+    +'<svg viewBox="0 0 120 60" width="100%" height="100%">'
+    +'<path class="wave-path-amber" d="M10 30 C 30 10, 40 50, 60 30 C 80 10, 90 50, 110 30" fill="none" stroke="#D9822B" stroke-width="4" stroke-linecap="round"/>'
+    +'<path class="wave-path-azure" d="M10 30 C 30 40, 40 20, 60 30 C 80 40, 90 20, 110 30" fill="none" stroke="#1B365D" stroke-width="3" stroke-linecap="round" opacity="0.7"/>'
+    +'</svg>'
+    +'</div>'
+    +'<div class="breath-text-bottom">HINGAKE VÄLJA...</div>'
+    +'</div>'
+    +'</div>'
+    +'</div>';
+    
+  h+='</div>'; // end df-dashboard
+
+  // 2. ORGANIC CURVED PROGRESS DECK & CONTROLS
+  h+='<div class="df-deck">'
+    +'<div class="df-track-container">'
+    +'<svg class="df-track-svg" viewBox="0 0 800 60" preserveAspectRatio="none">'
+    +'<path d="M 20 40 Q 200 10, 400 35 T 780 25" fill="none" stroke="#D9822B" stroke-width="4" stroke-linecap="round"/>'
+    +'</svg>'
+    +'<div class="df-step-nodes">';
+    
+  for(var i=0; i<Math.min(6, totalCount); i++){
+    var cls = (dd.done.indexOf(i)>=0) ? 'done' : (i===doneCount ? 'active' : '');
+    var icon = (i===0?'🏃':(i===1?'🧘':(i===2?'💨':(i===3?'🤸':(i===4?'🏋️':'🌿')))));
+    h+='<div class="df-node '+cls+'" onclick="startSession('+i+')">'+icon+'</div>';
+  }
+  
+  h+='</div></div>'; // end track container & step nodes
+
+  h+='<div class="df-meta-row">'
+    +'<div class="df-progress-text">'+doneCount+'/'+totalCount+'</div>'
+    +'<div class="df-user-chip" onclick="go(2)"><span style="color:var(--amber)">👤</span> MINU PROGRES</div>'
+    +'</div>';
+
+  // Minimalist controls
   var resume=(doneCount>0&&doneCount<list.length);
-  h+='<button class="start-btn" onclick="startSession()">'
-    +'<span class="play"><svg viewBox="0 0 24 24" width="22" height="22" style="fill:#F5EEDF"><path d="M8 5v14l11-7z"/></svg></span>'
-    +'<span class="stxt"><b>'+(doneCount>=list.length?'Korda tänast praktikat':(resume?'Jätka praktikat':'Alusta tänast praktikat'))+'</b>'
-    +'<span>'+(resume?'Jõudsid '+doneCount+'/'+list.length+' harjutuseni':w+'. nädal · '+WEEKS[w].title+' · umbes '+totalMin+' min')+'</span></span></button>';
-  if(doneCount<list.length)
-    h+='<button class="start-short" onclick="startSession(\'short\')">Väsinud täna? Tee lühike praktika (~10 min)</button>';
+  h+='<div class="df-controls">'
+    +'<button class="df-ctrl-btn" onclick="startSession(0)" title="Eelmine"><svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>'
+    +'<button class="df-ctrl-btn" onclick="toast('Vajuta Alusta treeningu jaoks')" title="Tagasi 10s"><svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg><span class="df-ctrl-sub">10s</span></button>'
+    +'<button class="df-ctrl-play" onclick="startSession()" title="'+(resume?'Jätka':'Alusta')+'"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>'
+    +'<button class="df-ctrl-btn" onclick="toast('Vajuta Alusta treeningu jaoks')" title="Edasi 10s"><svg viewBox="0 0 24 24"><path d="M12 5V1l5 5-5 5V7c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6h2c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z"/></svg><span class="df-ctrl-sub">10s</span></button>'
+    +'<button class="df-ctrl-btn" onclick="startSession()" title="Järgmine"><svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>'
+    +'</div>';
 
-  // quote
-  h+='<div class="quote"><div class="qt">'+q[0]+'</div><div class="qa">— '+q[1]+'</div></div>';
+  h+='</div>'; // end df-deck
 
-  // today's plan
+  // List of exercises card
   h+='<div class="card"><div class="card-head"><h2>Tänane kava</h2>'
     +'<span class="badge">'+doneCount+'/'+list.length+' tehtud</span></div>';
   list.forEach(function(e,i){
@@ -770,19 +956,8 @@ function viewToday(){
   });
   h+='</div>';
 
-  // new skill (every 3rd day)
-  if(d%3===0||d===1){
-    var si=Math.floor(d/3)%LEARN.length,sk=LEARN[si];
-    h+='<div class="card"><div class="card-head"><h2>'+IC.spark+' Uus oskus</h2><span class="badge badge-new">UUS</span></div>'
-      +'<div style="display:flex;justify-content:center;padding:.3rem 0 .6rem">'+lsym(sk[3])+'</div>'
-      +'<h3 class="serif" style="font-size:1.1rem;color:var(--ink2);font-weight:400;margin-bottom:.4rem">'+sk[0]+'</h3>'
-      +'<p style="font-size:.94rem;color:var(--ink);opacity:.92">'+sk[1]+'</p></div>';
-  }
-
   // tip + safety
   h+='<div class="tip"><h3>'+IC.leaf+' '+tip[0]+'</h3><p>'+tip[1]+'</p></div>';
-  if(w>=3){h+='<div class="tip safe"><h3>'+IC.shield+' Pea meeles</h3><p>Tasakaaluharjutuste ajal hoia tooli seljatoest kinni. Liigu aeglaselt ja peatu, kui tunned pearinglust.</p></div>';}
-
   return h;
 }
 
@@ -926,6 +1101,16 @@ setInterval(function(){
    GUIDED SESSION
    ====================================================== */
 var SS={list:[],idx:0,rem:0,total:0,timer:null,flip:null,paused:false,breath:null,wake:null,single:false};
+SS.seek = function(delta){
+  if(!SS.list || SS.list.length===0) return;
+  // delta is seconds. positive = skip back in step time, negative = jump forward
+  SS.rem = Math.max(1, Math.min(SS.total, SS.rem - delta));
+  var tn=document.getElementById('tNum');if(tn)tn.textContent=fmt(Math.max(0,SS.rem));
+  var ring=document.getElementById('tRing');
+  if(ring){var C=2*Math.PI*60;ring.style.strokeDashoffset=C*(1-SS.rem/SS.total);}
+  toast(delta > 0 ? 'Edasi 10s ⏩' : 'Tagasi 10s ⏪');
+};
+
 
 function startSession(mode){
   audio();bell('start');

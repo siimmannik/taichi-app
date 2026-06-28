@@ -812,7 +812,7 @@ function figure(anim){
 /* photo or animated figure */
 function demo(e,big){
   if(S.set.photos&&e.img){
-    var src='images/move-'+e.img+'.jpg';
+    var src='images/'+e.img+'.jpg';
     return '<img class="figphoto" src="'+src+'" alt="'+e.n+'" '
       +'onerror="this.outerHTML=window.__figFallback(\''+e.a+'\')">';
   }
@@ -820,9 +820,9 @@ function demo(e,big){
 }
 window.__figFallback=function(a){return '<div class="figbox">'+figure(a)+'</div>';};
 window.__imgFail=function(img){img.parentNode.outerHTML='<div class="s-demo"><div class="figbox lg">'+figure(img.getAttribute('data-anim'))+'</div></div>';};
-var DUO={warmup:['move-warmup','move-warmup2'],raise:['move-raise','move-wuji'],gather:['move-gather','move-meditate'],knee:['move-knee','move-shift'],cloud:['move-cloud','move-cloud2'],shift:['move-shift','move-shift2']};
-var TRIO={stretch:['move-stretch','move-stretchl','move-stretchr']};
-var FIGMOVE={neck:1};
+var DUO={};
+var TRIO={};
+var FIGMOVE={};
 function sessionDemo(e){
   var frames=null;
   if(S.set.photos&&e.img&&!FIGMOVE[e.a]){
@@ -833,7 +833,7 @@ function sessionDemo(e){
     return '<div class="s-demo flip"><img id="flipImg" data-frames="'+frames.join(',')+'" data-anim="'+e.a+'" src="images/'+frames[0]+'.jpg" alt="'+e.n+'" onerror="window.__imgFail(this)"></div>';
   }
   if(S.set.photos&&e.img&&!FIGMOVE[e.a]){
-    return '<div class="s-demo photo pulse"><img src="images/move-'+e.img+'.jpg" data-anim="'+e.a+'" alt="'+e.n+'" onerror="window.__imgFail(this)"></div>';
+    return '<div class="s-demo photo pulse"><img src="images/'+e.img+'.jpg" data-anim="'+e.a+'" alt="'+e.n+'" onerror="window.__imgFail(this)"></div>';
   }
   return '<div class="s-demo"><div class="figbox lg">'+figure(e.a)+'</div></div>';
 }
@@ -1150,7 +1150,7 @@ function loadStep(){
 
   var center;
   if(e.br&&e.a==='breathe'){
-    center='<div class="s-demo breathpic"><img id="bPhoto" class="bphoto" src="images/move-breathe.jpg" alt="" onerror="this.style.opacity=0"><div class="blabel2" id="bLabel">Valmistu…</div></div>';
+    center='<div class="s-demo breathpic"><img id="bPhoto" class="bphoto" src="images/breathe.jpg" alt="" onerror="this.style.opacity=0"><div class="blabel2" id="bLabel">Valmistu…</div></div>';
   }else{
     center=sessionDemo(e)
       +'<div class="s-timer"><svg width="136" height="136" viewBox="0 0 136 136">'
